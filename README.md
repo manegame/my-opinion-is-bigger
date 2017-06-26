@@ -1,0 +1,1 @@
+# Manegame Static Site Boilerplate
