@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "SuisseBPIntl-Medium";
+    src: url("SuisseBPIntl-Medium.eot");
+    src: url("SuisseBPIntl-Medium.eot?#iefix") format("embedded-opentype"),
+         url("SuisseBPIntl-Medium.woff2") format("woff2"),
+         url("SuisseBPIntl-Medium.woff") format("woff"),
+         url("SuisseBPIntl-Medium.ttf") format("ttf"),
+         url("SuisseBPIntl-Medium.svg#SuisseBPIntl-Medium") format("svg");
+    font-style: normal;
+    font-weight: normal;
+}

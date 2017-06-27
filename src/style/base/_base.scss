@@ -10,10 +10,11 @@ body {
   color: $main-color;
   font-size: $font-size;
   line-height: $line-height;
-  font-family: $system-stack;
+  font-family: $serif-stack;
 }
 
 a {
+  font-family: $sans-serif-stack;
   color: $main-color;
   text-decoration: none;
   &:visited {
@@ -25,8 +26,29 @@ a {
   &:active {
     color: $main-color;
   }
+  &.mousedown {
+    text-decoration: underline;
+  }
 }
 
 p {
-  font-family: $display-stack;
+  font-family: $sans-serif-stack;
+  &.mousedown {
+    text-decoration: underline;
+  }
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h1 {
+  font-size: $font-size-l;
+  line-height: $line-height-l;
+}
+
+ul {
+  li {
+    padding-bottom: $line-height / 4;
+  }
 }

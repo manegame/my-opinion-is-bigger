@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "TimesNewRoman";
+    src: url("TimesNewRoman.eot");
+    src: url("TimesNewRoman.woff2") format("woff2"),
+         url("TimesNewRoman.woff") format("woff"),
+         url("TimesNewRoman.ttf") format("ttf");
+    font-style: normal;
+    font-weight: normal;
+}

@@ -40,6 +40,7 @@
     "debounce": "^1.0.0",
     "debowerify": "^1.4.1",
     "gulp-sourcemaps": "^1.6.0",
+    "howler": "^2.0.4",
     "image-loaded": "^0.0.2",
     "imagesloaded": "^4.1.1",
     "socket.io-client": "^1.7.1",

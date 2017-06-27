@@ -1,0 +1,85 @@
+iframe {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+
+}
+
+.title {
+  position: fixed;
+  z-index: 9;
+  background-color: $background-color;
+  width: 100vw;
+  max-height: 25vh;
+  text-align: center;
+  @include bottom-shadow;
+  h1, h2 {
+    padding: $line-height / 2 0 0 0;
+  }
+  p {
+    padding: $line-height / 2 0;
+  }
+
+}
+
+.main {
+  position: absolute;
+  width: 100vw;
+  height: 80vh;
+  margin: $line-height * 6 0;
+  #start {
+    display: block;
+    text-align: center;
+    font-size: $font-size-l;
+    line-height: $line-height-l;
+    margin: $line-height * 4 0 ;
+  }
+  img, .text {
+    margin: 0 5vw;
+    width: 90vw;
+  }
+  .floorplan-menu {
+    padding: 0 $line-height / 2;
+    #pin {
+      margin: 0;
+      display: inline;
+      height: $line-height;
+      width: auto;
+    }
+    p {
+      display: inline;
+    }
+    width: 60vw;
+    position: absolute;
+    top: 0;
+    right: 5vw;
+  }
+}
+
+.player {
+  position: fixed;
+  background: $background-color;
+  height: 10vh;
+  bottom: 0;
+  width: 100vw;
+  z-index: 10;
+  @include top-shadow;
+  input {
+    height: 10vh;
+  }
+
+  &.active {
+    height: 100%;
+    input {
+      height: 40vh;
+    }
+  }
+
+  .play, .pause, .next {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+  transition: all .3s ease;
+}

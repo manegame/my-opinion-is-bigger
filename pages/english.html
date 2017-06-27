@@ -28,7 +28,7 @@
   <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
   <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
-  <title>MOIBTY</title>
+  <title>Designer's Doubts Audiotour</title>
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@spatiebar" />
@@ -40,9 +40,9 @@
   <meta property="og:image" content="">
   <meta property="og:description" content="" />
 
-  <link href='fonts/TimesNewRoman.css' rel="stylesheet" type="text/css">
-  <link href='fonts/SuisseBPIntl-Medium.css' rel="stylesheet" type="text/css">
-  <link href='style.css' rel="stylesheet" type="text/css">
+  <link href='/fonts/TimesNewRoman.css' rel="stylesheet" type="text/css">
+  <link href='/fonts/SuisseBPIntl-Medium.css' rel="stylesheet" type="text/css">
+  <link href='/style.css' rel="stylesheet" type="text/css">
 
 </head>
 
@@ -60,18 +60,54 @@
 
   </div>
 
-
-
   <div class="main">
 
-    <p class="text">
-      Have you ever wondered what kind of thoughts go through the mind of a designer? What their biggest fears and insecurities do to their work?<br /><br /> Take the tour to find out what we struggle with and how we deal with it.
+    <img src="/img/floor-plan.svg"/>
+
+    <div class="floorplan-menu">
+      <div class="position">
+        <img id="pin" src="/img/pin.svg" />
+        <p>
+          You are here<br /><br />
+        </p>
+      </div>
+      <p>
+        Where would you like to begin?<br /><br />
+      </p>
+      <ul>
+        <li>
+          <a id="r1" href="">Room 1</a>
+        </li>
+        <li>
+          <a id="r2" href="">Room 2</a>
+        </li>
+        <li>
+          <a href="">Room 3</a>
+        </li>
+        <li>
+          <a href="">Room 4</a>
+        </li>
+        <li>
+          <a href="">Room 5</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="player">
+
+    <p>
+      <!-- Please put your headphones on and press play<br /><br /> -->
     </p>
-    <a id="start" href="pages/english.html">START</a>
+
+    <input type="image" id="play" class="play active" src="/img/play.svg" />
+    <input type="image" id="pause" class="pause" src="/img/pause.svg" />
+    <input type="image" id="next" class="next" src="/img/next.svg" />
   </div>
 
 
-  <script src='app.min.js'></script>
+  <script src='/app.min.js'></script>
 
 </body>
 

@@ -5,9 +5,12 @@
 $font-size: 24px;
 $line-height: 24px;
 
+$font-size-l: 48px;
+$line-height-l: 50px;
+
 $system-stack: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-$serif-stack: 'times new roman', times, georgia, serif;
-$sans-serif-stack: helvetica, arial, sans-serif;
+$serif-stack: "TimesNewRoman", 'times new roman', times, georgia, serif;
+$sans-serif-stack: "SuisseBPIntl-Medium", helvetica, arial, sans-serif;
 $display-stack: "Comic Sans", "Comic Sans MS";
 
 
@@ -18,6 +21,7 @@ $display-stack: "Comic Sans", "Comic Sans MS";
 
 $background-color: #fff;
 $main-color: #000;
+$blue: #00f;
 
 
 //

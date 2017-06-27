@@ -10,20 +10,31 @@
   }
 }
 
+@mixin bottom-shadow {
+  -webkit-box-shadow: 0px 10px 25px -11px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 10px 25px -11px rgba(0,0,0,0.75);
+  box-shadow: 0px 10px 25px -11px rgba(0,0,0,0.75);
+}
 
-/// 
+@mixin top-shadow {
+  -webkit-box-shadow: 0px -10px 25px -11px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -10px 25px -11px rgba(0,0,0,0.75);
+  box-shadow: 0px -10px 25px -11px rgba(0,0,0,0.75);
+}
+
+///
 /// Helper to handle overflowing text
 /// Values of text-overflow are: clip, ellipsis, or a string
 ///
 
 @mixin truncate-text($overflow: ellipsis) {
   overflow: hidden;
-  text-overflow: $overflow; // 
+  text-overflow: $overflow; //
   white-space: nowrap;
 }
 
 
-/// 
+///
 /// Helper to set height and width
 ///
 
@@ -33,7 +44,7 @@
 }
 
 
-/// 
+///
 /// Helper to center element vertically and horizontally in parent
 ///
 
@@ -44,18 +55,18 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-/// 
+///
 /// Helper to center element vertically in parent
 ///
 
 @mixin center-vertical {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
 }
 
 
-/// 
+///
 /// Helper to center element horizontally in parent
 ///
 

@@ -102,7 +102,7 @@ gulp.task('watch', function () {
   gulp.watch('src/js/*.js', ['scripts']);
 
   // Watch .html files
-  gulp.watch('*.html', browserSync.reload);
+  gulp.watch('**/*.html', browserSync.reload);
 
   // Watch .scss files
   gulp.watch('src/style/**/*.scss', ['sass']);

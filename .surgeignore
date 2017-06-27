@@ -1,0 +1,11 @@
+node_modules
+src
+.git
+
+.sass-cache
+.DS_Store
+.gitignore
+package.json
+gulpfile.js
+
+*.sh
