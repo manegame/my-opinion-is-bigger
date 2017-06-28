@@ -9,13 +9,11 @@
 
     require("howler");
 
-    var current;
-    var sound;
-
     var playBtn = $('#play');
     var pauseBtn = $('#pause');
     var nextBtn = $('#next');
-    var room;
+
+    var count = 0;
 
     var r1 = {
 
@@ -25,36 +23,39 @@
 
     }
 
+    // id is based om room + room number + list number
+    //
+
     var r2 = {
 
       "0" : {
         "id"      : "room20",
-        "name"    : " ",
+        "name"    : "Introduction",
         "src"     : "/audio/r2/intro.mp3"
       },
 
-      "1"   : {
-        "id"      : "room21",
-        "name"    : "Fay Asselbergs",
-        "src"     : "/audio/r2/fay.mp3"
-      },
-
-      "2" : {
-        "id"      : "room22",
-        "name"    : "Janne van Hooff",
-        "src"     : "/audio/r2/fay.mp3"
-      },
-
-      "3" : {
+      "1" : {
         "id"      : "room23",
         "name"    : "Magda Skibinska",
         "src"     : "/audio/r2/magda.mp3"
       },
 
+      "2"   : {
+        "id"      : "room21",
+        "name"    : "Fay Asselbergs",
+        "src"     : "/audio/r2/fay.mp3"
+      },
+
+      "3" : {
+        "id"      : "room22",
+        "name"    : "Janne van Hooff",
+        "src"     : "/audio/r2/janne.mp3"
+      },
+
       "4"   : {
         "id"      : "room24",
         "name"    : "Noa Defesche",
-        "src"     : "/audio/r2/magda.mp3"
+        "src"     : "/audio/r2/noa.mp3"
       }
 
     }
@@ -73,12 +74,17 @@
 
     // to create the ids on the fly
     var room2 = [];
+    var howls = [];
 
-    function loadHowls() {
+
+    $(function () {
 
       console.log(r2Size);
 
       for (var i = 0; i < r2Size; i ++ ) {
+
+        // how to get the things you need
+        // console.log(r2[i].id); // console.log(r2[i].name); // console.log(r2[i].src);
 
         // assign the ids
         room2[i] = r2[i].id;
@@ -87,22 +93,20 @@
           src: r2[i].src
         });
 
-        console.log(r2[i].id);
-        console.log(r2[i].name);
-        console.log(r2[i].src);
+        console.log(room2[i]);
+
+        if (i == 0) {
+          $('.list').append('<li id="'+r2[i].id+'" class="active">'+r2[i].name+'</li>');  
+        } else {
+          $('.list').append('<li id="'+r2[i].id+'" >'+r2[i].name+'</li>');
+        }
+
+
+        howls.push(room2[i]);
+
       }
 
-    }
-
-
-
-    $(function () {
-
-      loadHowls();
-
-      sound = new Howl({
-        src : [r1.intro]
-      });
+      console.log(howls);
 
       console.log(r1.intro, r2.intro);
 
@@ -144,36 +148,47 @@
       });
 
       $('#play').on('click', function() {
-          room20.play();
+          console.log('count: ' +howls[count]+ '');
+          howls[count].play();
       });
       $('#pause').on('click', function() {
-          room20.pause();
+          howls[count].pause();
       });
       $('#next').on('click', function() {
-          // counter++
-          // var id2 = sound.play('' + r2[counter] + '');
+          // limit to size of list
+          if(count < r2Size) {
+            count++;
+            howls[count].play();
+          } else {
+            alert('finished this room');
+            count = 0;
+          }
       });
 
       //
-      // event listeners for Howler
+      // event listeners for Howler. Add for all loaded sounds
       //
 
-      sound.on('play', function(){
-        console.log('sound playing');
-        nextBtn.removeClass('active');
-        playBtn.removeClass('active');
-        pauseBtn.addClass('active');
-      });
-      sound.on('pause', function(){
-        console.log('sound paused');
-        pauseBtn.removeClass('active');
-        playBtn.addClass('active');
-      });
-      sound.on('end', function(){
-        console.log('sound ended');
-        pauseBtn.removeClass('active');
-        nextBtn.addClass('active');
-      });
+      for (i = 0; i < howls.length; i ++) {
+
+        howls[i].on('play', function(){
+          console.log('sound playing');
+          nextBtn.removeClass('active');
+          playBtn.removeClass('active');
+          pauseBtn.addClass('active');
+        });
+        howls[i].on('pause', function(){
+          console.log('sound paused');
+          pauseBtn.removeClass('active');
+          playBtn.addClass('active');
+        });
+        howls[i].on('end', function(){
+          console.log('sound ended');
+          pauseBtn.removeClass('active');
+          nextBtn.addClass('active');
+        });
+
+      }
 
 
     });
