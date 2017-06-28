@@ -9,88 +9,120 @@
 
     require("howler");
 
+    var current;
     var sound;
-
-    var currentRoom;
-    var counter;
 
     var playBtn = $('#play');
     var pauseBtn = $('#pause');
     var nextBtn = $('#next');
+    var room;
 
-    var r2 = ['magda', 'janne', 'fay', 'noa'];
-    var id;
+    var r1 = {
 
-    // Loading the sounds
+      "intro" : {
+        "src" : "/audio/r1/intro.mp3"
+      }
 
-    function loadPlaylist() {
+    }
 
-      currentRoom = r2;
-      counter = 0;
+    var r2 = {
 
-      console.log(currentRoom[counter]);
+      "0" : {
+        "id"      : "room20",
+        "name"    : " ",
+        "src"     : "/audio/r2/intro.mp3"
+      },
 
-      sound = new Howl({
-        src: ['/audio/r2/r2-full.mp3'],
-        sprite: {
-          magda: [0, 15000],
-          fay: [15000, 14000],
-          janne: [29000, 15000],
-          noa: [44000, 13000]
-        },
-        onend: function () {
-          console.log('ended');
-          counter++;
+      "1"   : {
+        "id"      : "room21",
+        "name"    : "Fay Asselbergs",
+        "src"     : "/audio/r2/fay.mp3"
+      },
+
+      "2" : {
+        "id"      : "room22",
+        "name"    : "Janne van Hooff",
+        "src"     : "/audio/r2/fay.mp3"
+      },
+
+      "3" : {
+        "id"      : "room23",
+        "name"    : "Magda Skibinska",
+        "src"     : "/audio/r2/magda.mp3"
+      },
+
+      "4"   : {
+        "id"      : "room24",
+        "name"    : "Noa Defesche",
+        "src"     : "/audio/r2/magda.mp3"
+      }
+
+    }
+
+    //get amount of items from obj
+    Object.size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
         }
-      });
+        return size;
+    };
 
-      //
-      // event listeners for Howler
-      //
+    //size of obj
+    var r2Size = Object.size(r2);
 
-      sound.on('play', function(){
-        console.log('sound playing');
-        nextBtn.removeClass('active');
-        playBtn.removeClass('active');
-        pauseBtn.addClass('active');
-      });
-      sound.on('pause', function(){
-        console.log('sound paused');
-        pauseBtn.removeClass('active');
-        playBtn.addClass('active');
-      });
-      sound.on('end', function(){
-        console.log('sound ended');
-        pauseBtn.removeClass('active');
-        nextBtn.addClass('active');
-      });
+    // to create the ids on the fly
+    var room2 = [];
+
+    function loadHowls() {
+
+      console.log(r2Size);
+
+      for (var i = 0; i < r2Size; i ++ ) {
+
+        // assign the ids
+        room2[i] = r2[i].id;
+
+        room2[i] = new Howl({
+          src: r2[i].src
+        });
+
+        console.log(r2[i].id);
+        console.log(r2[i].name);
+        console.log(r2[i].src);
+      }
 
     }
 
-    // playing the next sound
 
-    function playNext(room, counter) {
-      id = sound.play(room[counter]);
-      return id;
-    }
 
     $(function () {
 
-      //
+      loadHowls();
+
+      sound = new Howl({
+        src : [r1.intro]
+      });
+
+      console.log(r1.intro, r2.intro);
+
       // Click stuff
 
-      $('p, h1, h2, h3, a').on('mousedown touchstart', function() {
+      $('a').on('mousedown touchstart', function() {
         $(this).addClass('mousedown');
       });
 
-      $('p, h1, h2, h3, a').on('mouseup touchend', function() {
+      $('a').on('mouseup touchend', function() {
         $(this).removeClass('mousedown');
       });
 
       $('.instructions').on('click', function () {
+
         if($(this).hasClass('back')){
           $('.player').removeClass('active');
           $(this).html('Pick a room to get started');
+        } else {
+          $('.player').toggleClass('active');
         }
       });
 
@@ -112,15 +144,35 @@
       });
 
       $('#play').on('click', function() {
-          sound.play('magda');
-          playNext(currentRoom, counter);
+          room20.play();
       });
       $('#pause').on('click', function() {
-          sound.pause(id);
+          room20.pause();
       });
       $('#next').on('click', function() {
           // counter++
           // var id2 = sound.play('' + r2[counter] + '');
+      });
+
+      //
+      // event listeners for Howler
+      //
+
+      sound.on('play', function(){
+        console.log('sound playing');
+        nextBtn.removeClass('active');
+        playBtn.removeClass('active');
+        pauseBtn.addClass('active');
+      });
+      sound.on('pause', function(){
+        console.log('sound paused');
+        pauseBtn.removeClass('active');
+        playBtn.addClass('active');
+      });
+      sound.on('end', function(){
+        console.log('sound ended');
+        pauseBtn.removeClass('active');
+        nextBtn.addClass('active');
       });
 
 
