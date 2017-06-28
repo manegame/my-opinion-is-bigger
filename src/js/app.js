@@ -35,19 +35,19 @@
       },
 
       "1" : {
-        "id"      : "room23",
+        "id"      : "room21",
         "name"    : "Magda Skibinska",
         "src"     : "/audio/r2/magda.mp3"
       },
 
       "2"   : {
-        "id"      : "room21",
+        "id"      : "room22",
         "name"    : "Fay Asselbergs",
         "src"     : "/audio/r2/fay.mp3"
       },
 
       "3" : {
-        "id"      : "room22",
+        "id"      : "room23",
         "name"    : "Janne van Hooff",
         "src"     : "/audio/r2/janne.mp3"
       },
@@ -96,7 +96,7 @@
         console.log(room2[i]);
 
         if (i == 0) {
-          $('.list').append('<li id="'+r2[i].id+'" class="active">'+r2[i].name+'</li>');  
+          $('.list').append('<li id="'+r2[i].id+'" class="active">'+r2[i].name+'</li>');
         } else {
           $('.list').append('<li id="'+r2[i].id+'" >'+r2[i].name+'</li>');
         }
@@ -107,8 +107,6 @@
       }
 
       console.log(howls);
-
-      console.log(r1.intro, r2.intro);
 
       // Click stuff
 
@@ -157,7 +155,9 @@
       $('#next').on('click', function() {
           // limit to size of list
           if(count < r2Size) {
+            $('#room2'+count+'' ).removeClass('active');
             count++;
+            $('#room2'+count+'' ).addClass('active');
             howls[count].play();
           } else {
             alert('finished this room');
