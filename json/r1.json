@@ -1,0 +1,45 @@
+{
+
+  "0" : {
+    "id"      : "room10",
+    "name"    : "Introduction",
+    "src"     : "/audio/r2/intro.mp3"
+  },
+
+  "1" : {
+    "id"      : "room11",
+    "name"    : "Charlotte Gramberg",
+    "src"     : "/audio/r2/magda.mp3"
+  },
+
+  "2"   : {
+    "id"      : "room12",
+    "name"    : "Jaap Smit",
+    "src"     : "/audio/r2/fay.mp3"
+  },
+
+  "3" : {
+    "id"      : "room13",
+    "name"    : "Wies van der Wal",
+    "src"     : "/audio/r2/janne.mp3"
+  },
+
+  "4"   : {
+    "id"      : "room14",
+    "name"    : "Yara Veloso",
+    "src"     : "/audio/r2/noa.mp3"
+  },
+
+  "5"   : {
+    "id"      : "room15",
+    "name"    : "Jamie de Rooij",
+    "src"     : "/audio/r2/noa.mp3"
+  },
+
+  "6"   : {
+    "id"      : "room16",
+    "name"    : "Yacinth Pos",
+    "src"     : "/audio/r2/noa.mp3"
+  }
+
+}
