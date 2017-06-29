@@ -13,12 +13,48 @@
     var pauseBtn = $('#pause');
     var nextBtn = $('#next');
 
-    var count = 0;
-
     var r1 = {
 
-      "intro" : {
-        "src" : "/audio/r1/intro.mp3"
+      "0" : {
+        "id"      : "room10",
+        "name"    : "Introduction",
+        "src"     : "/audio/r2/intro.mp3"
+      },
+
+      "1" : {
+        "id"      : "room11",
+        "name"    : "Charlotte Gramberg",
+        "src"     : "/audio/r2/magda.mp3"
+      },
+
+      "2"   : {
+        "id"      : "room12",
+        "name"    : "Jaap Smit",
+        "src"     : "/audio/r2/fay.mp3"
+      },
+
+      "3" : {
+        "id"      : "room13",
+        "name"    : "Wies van der Wal",
+        "src"     : "/audio/r2/janne.mp3"
+      },
+
+      "4"   : {
+        "id"      : "room14",
+        "name"    : "Yara Veloso",
+        "src"     : "/audio/r2/noa.mp3"
+      },
+
+      "5"   : {
+        "id"      : "room15",
+        "name"    : "Jamie de Rooij",
+        "src"     : "/audio/r2/noa.mp3"
+      },
+
+      "6"   : {
+        "id"      : "room16",
+        "name"    : "Yacinth Pos",
+        "src"     : "/audio/r2/noa.mp3"
       }
 
     }
@@ -60,6 +96,9 @@
 
     }
 
+    var count = 0;
+    var rooms = [r1, r2];
+
     //get amount of items from obj
     Object.size = function(obj) {
         var size = 0, key;
@@ -69,40 +108,102 @@
         return size;
     };
 
-    //size of obj
+    //size of objs
+    var r1Size = Object.size(r1);
     var r2Size = Object.size(r2);
 
-    // to create the ids on the fly
+    // to create the play ids on the fly, make these variables
+    var room1 = [];
     var room2 = [];
-    var howls = [];
 
+    var howls = [];
 
     $(function () {
 
-      console.log(r2Size);
+      function loadPlaylist (int, rX, room, rSize) {
+        // called after picking a room
+        // loop over all elements in a database and load them as howler objects
 
-      for (var i = 0; i < r2Size; i ++ ) {
+        for (var i = 0; i < rSize; i ++ ) {
 
-        // how to get the things you need
-        // console.log(r2[i].id); // console.log(r2[i].name); // console.log(r2[i].src);
+          // how to get the things you need
+          // console.log(r2[i].id); // console.log(r2[i].name); // console.log(r2[i].src);
 
-        // assign the ids
-        room2[i] = r2[i].id;
+          // assign the ids
+          room[i] = rX[i].id;
 
-        room2[i] = new Howl({
-          src: r2[i].src
-        });
+          // make the howler objects
+          room[i] = new Howl({
+            src: rX[i].src
+          });
 
-        console.log(room2[i]);
+          console.log("lp-" + room[i]);
 
-        if (i == 0) {
-          $('.list').append('<li id="'+r2[i].id+'" class="active">'+r2[i].name+'</li>');
-        } else {
-          $('.list').append('<li id="'+r2[i].id+'" >'+r2[i].name+'</li>');
+          if (i == 0) {
+            $('.list').append('<li id="'+rX[i].id+'" class="active">'+rX[i].name+'</li>');
+          } else {
+            $('.list').append('<li id="'+rX[i].id+'" >'+rX[i].name+'</li>');
+          }
+
+          howls.push(room[i]);
+
         }
 
+        setEventListeners(int);
 
-        howls.push(room2[i]);
+      }
+
+      function setEventListeners (int) {
+        // called after loadPlaylist. Takes int for ID's (and other purposes?)
+
+        // event listeners for Howler. Add for all loaded sounds
+        //
+
+        console.log("se-" + howls);
+
+        for (var i = 0; i < howls.length; i ++) {
+
+          howls[i].on('play', function(){
+            console.log('sound playing');
+            nextBtn.removeClass('active');
+            playBtn.removeClass('active');
+            pauseBtn.addClass('active');
+          });
+          howls[i].on('pause', function(){
+            console.log('sound paused');
+            pauseBtn.removeClass('active');
+            playBtn.addClass('active');
+          });
+          howls[i].on('end', function(){
+            console.log('sound ended');
+            pauseBtn.removeClass('active');
+            nextBtn.addClass('active');
+          });
+
+        }
+
+        // event listeners for the controls
+        //
+
+        $('#play').on('click', function() {
+            console.log('count: ' +howls[count]+ '');
+            howls[count].play();
+        });
+        $('#pause').on('click', function() {
+            howls[count].pause();
+        });
+        $('#next').on('click', function() {
+            // limit to size of list
+            if(count < rSize) {
+              $('#room'+int+''+count+'' ).removeClass('active');
+              count++;
+              $('#room'+int+''+count+'' ).addClass('active');
+              howls[count].play();
+            } else {
+              alert('finished this room');
+              count = 0;
+            }
+        });
 
       }
 
@@ -128,9 +229,16 @@
         }
       });
 
+      //
+      // Room picking
+
       $('a').on('click', function(event) {
         if(event.target.id == "r1" || event.target.id == "r2" || event.target.id == "r3" || event.target.id == "r4" || event.target.id == "r5" ) {
           event.preventDefault();
+        }
+
+        if(event.target.id == "r1") {
+          loadPlaylist(1, r1, room1, r1Size);
         }
 
         if(event.target.id == "r2") {
@@ -141,54 +249,9 @@
           $('.player').addClass('active');
           $('.instructions').html('Back to overview').addClass('back');
 
-          loadPlaylist();
+          loadPlaylist(2, r2, room2, r2Size);
         }
       });
-
-      $('#play').on('click', function() {
-          console.log('count: ' +howls[count]+ '');
-          howls[count].play();
-      });
-      $('#pause').on('click', function() {
-          howls[count].pause();
-      });
-      $('#next').on('click', function() {
-          // limit to size of list
-          if(count < r2Size) {
-            $('#room2'+count+'' ).removeClass('active');
-            count++;
-            $('#room2'+count+'' ).addClass('active');
-            howls[count].play();
-          } else {
-            alert('finished this room');
-            count = 0;
-          }
-      });
-
-      //
-      // event listeners for Howler. Add for all loaded sounds
-      //
-
-      for (i = 0; i < howls.length; i ++) {
-
-        howls[i].on('play', function(){
-          console.log('sound playing');
-          nextBtn.removeClass('active');
-          playBtn.removeClass('active');
-          pauseBtn.addClass('active');
-        });
-        howls[i].on('pause', function(){
-          console.log('sound paused');
-          pauseBtn.removeClass('active');
-          playBtn.addClass('active');
-        });
-        howls[i].on('end', function(){
-          console.log('sound ended');
-          pauseBtn.removeClass('active');
-          nextBtn.addClass('active');
-        });
-
-      }
 
 
     });
