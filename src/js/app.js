@@ -112,6 +112,9 @@
     var r1Size = Object.size(r1);
     var r2Size = Object.size(r2);
 
+    console.log("r1Size: " + r1Size);
+    console.log("r1Size: " + r1Size);
+
     // to create the play ids on the fly, make these variables
     var room1 = [];
     var room2 = [];
@@ -120,7 +123,31 @@
 
     $(function () {
 
+      function unLoad() {
+
+        // unload all currently loaded objects, remove event listeners
+        //
+
+        if(howls.length == 0) {
+          console.log("empty array");
+        } else {
+          for(var i = 0; i < howls.length; i++ ) {
+            howls[i].off();
+            howls[i].unload();
+            howls = [];
+
+            $('.list').empty();
+            count = 0;
+            $('#play, #pause, #next').off();
+          }
+        }
+
+      }
+
       function loadPlaylist (int, rX, room, rSize) {
+
+        unLoad();
+
         // called after picking a room
         // loop over all elements in a database and load them as howler objects
 
@@ -186,7 +213,7 @@
         //
 
         $('#play').on('click', function() {
-            console.log('count: ' +howls[count]+ '');
+            console.log('count: ' +howls[count]);
             howls[count].play();
         });
         $('#pause').on('click', function() {
@@ -194,7 +221,7 @@
         });
         $('#next').on('click', function() {
             // limit to size of list
-            if(count < rSize) {
+            if(count < howls.length) {
               $('#room'+int+''+count+'' ).removeClass('active');
               count++;
               $('#room'+int+''+count+'' ).addClass('active');
@@ -207,7 +234,6 @@
 
       }
 
-      console.log(howls);
 
       // Click stuff
 
@@ -238,6 +264,13 @@
         }
 
         if(event.target.id == "r1") {
+
+          $('#map').attr('src', '/img/floor-plan-r1.svg');
+          $('.r').removeClass('active');
+          $(this).addClass('active');
+          $('.player').addClass('active');
+          $('.instructions').html('Back to overview').addClass('back');
+
           loadPlaylist(1, r1, room1, r1Size);
         }
 
