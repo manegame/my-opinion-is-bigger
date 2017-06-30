@@ -9,6 +9,9 @@
 
     require("howler");
 
+
+    var loading  = $('#loading');
+    var pin = $('#pin');
     var playBtn = $('#play');
     var pauseBtn = $('#pause');
     var nextBtn = $('#next');
@@ -147,7 +150,7 @@
       "2" : {
           "id"    : "room42",
           "name"  : "Gregor Nebe",
-          "src"   : "/audio/r4/marton.mp3"
+          "src"   : "/audio/r4/gregor.mp3"
       },
 
       "3" : {
@@ -220,7 +223,6 @@
 
     console.log(rSize);
 
-
     // to create the play ids on the fly, make these variables
     var room1 = [];
     var room2 = [];
@@ -241,6 +243,7 @@
           console.log("empty array");
         } else {
           for(var i = 0; i < howls.length; i++ ) {
+            howls[i].stop();
             howls[i].off();
             howls[i].unload();
             howls = [];
@@ -254,6 +257,8 @@
       }
 
       function loadPlaylist (int, rX, room, rSize) {
+
+        loading.addClass('active');
 
         unLoad();
 
@@ -270,7 +275,7 @@
 
           // make the howler objects
           room[i] = new Howl({
-            src: rX[i].src
+            src     : rX[i].src
           });
 
           console.log("lp-" + room[i]);
@@ -301,6 +306,7 @@
 
           howls[i].on('play', function(){
             console.log('sound playing');
+            loading.removeClass('active');
             nextBtn.removeClass('active');
             playBtn.removeClass('active');
             pauseBtn.addClass('active');
@@ -310,18 +316,33 @@
             pauseBtn.removeClass('active');
             playBtn.addClass('active');
           });
-          howls[i].on('end', function(){
-            console.log('sound ended');
-            pauseBtn.removeClass('active');
-            nextBtn.addClass('active');
-          });
+          if(howls[i] == howls.length-1) {
+            howls[i].on('end', function(){
+              console.log('last sound played');
+              playBtn.removeClass('active');
+              pauseBtn.removeClass('active');
+              pin.addClass('active');
+            });
+          } else {
+            howls[i].on('end', function(){
+              console.log('sound ended');
+              playBtn.removeClass('active');
+              pauseBtn.removeClass('active');
+              nextBtn.addClass('active');
+            });
+          }
           howls[i].on('stop', function(){
             console.log('sound stopped');
             pauseBtn.removeClass('active');
-            playBtn.addClass('active');
           });
 
         }
+
+        howls[howls.length-1].on('load', function(){
+          console.log('last loaded');
+          loading.removeClass('active');
+          playBtn.addClass('active');
+        });
 
         // event listeners for the controls
         //
@@ -355,9 +376,19 @@
       function visualFeedback (id, el) {
         $('#map').attr('src', '/img/floor-plan-'+id+'.svg');
         $('.r').removeClass('active');
+        playBtn.removeClass('active');
+        pauseBtn.removeClass('active');
+        nextBtn.removeClass('active');
         el.addClass('active');
-        $('.player').addClass('active');
-        $('.instructions').html('Back to overview').addClass('back');
+      }
+
+      function toggleView () {
+        $('.player').toggleClass('active');
+        if( $('.player').hasClass('active')) {
+          $('.instructions').text('Back to overview');
+        } else {
+          $('.instructions').text('Back to list');
+        }
       }
 
       // Click stuff
@@ -370,14 +401,8 @@
         $(this).removeClass('mousedown');
       });
 
-      $('.instructions').on('click', function () {
-
-        if($(this).hasClass('back')){
-          $('.player').removeClass('active');
-          $(this).html('Pick a room to get started');
-        } else {
-          $('.player').toggleClass('active');
-        }
+      $('.instructions').on('click', function() {
+        toggleView();
       });
 
       //
@@ -391,26 +416,31 @@
         if(event.target.id == "r1") {
           visualFeedback(event.target.id, $(this));
           loadPlaylist(1, r1, room1, rSize);
+          toggleView();
         }
 
         if(event.target.id == "r2") {
           visualFeedback(event.target.id, $(this));
           loadPlaylist(2, r2, room2, rSize);
+          toggleView();
         }
 
         if(event.target.id == "r3") {
           visualFeedback(event.target.id, $(this));
           loadPlaylist(3, r3, room3, rSize);
+          toggleView();
         }
 
         if(event.target.id == "r4") {
           visualFeedback(event.target.id, $(this));
           loadPlaylist(4, r4, room4, rSize);
+          toggleView();
         }
 
         if(event.target.id == "r5") {
           visualFeedback(event.target.id, $(this));
           loadPlaylist(5, r5, room5, rSize);
+          toggleView();
         }
 
 
