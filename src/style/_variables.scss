@@ -40,7 +40,7 @@ $blue: #00f;
 
 $breakpoints: (
   'small': (max-width: 700px),
-  'medium': (max-width: 1000px),
+  'medium': (min-width: 1000px),
   'large': (max-width: 1600px),
   'short': (max-height: 600px),
 );
