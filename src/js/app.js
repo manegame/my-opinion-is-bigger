@@ -402,13 +402,15 @@
         //
 
         if(howls.length == 0) {
-          console.log("empty array");
+          console.log("no sounds loaded yet");
         } else {
+          howls[count].stop();
           for(var i = 0; i < howls.length; i++ ) {
             howls[i].stop();
             howls[i].off();
             howls[i].unload();
             howls = [];
+
 
             $('.list').empty();
             count = 0;
@@ -443,9 +445,9 @@
           console.log("lp-" + room[i]);
 
           if (i == 0) {
-            $('.list').append('<li id="'+rX[i].id+'" class="active">'+rX[i].name+'</li>');
+            $('.list').append('<li id="'+rX[i].id+'" data-int="'+i+'" class="list-item active">'+rX[i].name+'</li>');
           } else {
-            $('.list').append('<li id="'+rX[i].id+'" >'+rX[i].name+'</li>');
+            $('.list').append('<li id="'+rX[i].id+'" data-int="'+i+'" class="list-item" >'+rX[i].name+'</li>');
           }
 
           howls.push(room[i]);
@@ -509,9 +511,16 @@
         // event listeners for the controls
         //
 
-        $('.r').on('click', function(){
-          howls[count].stop();
-        });
+        // $('.r').on('click', function(){
+        //
+        //
+        //
+        //   for ( var i = 0; i < howls.length; i++ ) {
+        //       console.log(howls[i], "count" + count);
+        //       howls[i].stop();
+        //
+        //   }
+        // });
 
         $('#play').on('click', function() {
             console.log('count: ' +howls[count]);
@@ -531,6 +540,15 @@
               alert('finished this room');
               count = 0;
             }
+        });
+
+        $('.list-item').on('click', function(){
+
+          howls[count].stop();
+          count = $(this).attr('data-int');
+          howls[count].play();
+          $('.list-item').removeClass('active');
+          $(this).addClass('active');
         });
 
       }
